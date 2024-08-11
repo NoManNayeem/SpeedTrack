@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Modal, ActivityIndicator, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, Modal, ActivityIndicator, Dimensions, Animated } from 'react-native';
 import { useTheme, Surface, Button } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import NetInfo from '@react-native-community/netinfo';
 import * as Location from 'expo-location';
 import axios from 'axios';
-import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -21,6 +20,8 @@ export default function HomeScreen() {
   const [isp, setIsp] = useState('Fetching...');
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const fadeAnim = new Animated.Value(0); // Initial value for opacity: 0
 
   const fetchNetworkDetails = async () => {
     const state = await NetInfo.fetch();
@@ -88,6 +89,14 @@ export default function HomeScreen() {
     return () => clearInterval(interval);
   }, []);
 
+  useEffect(() => {
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 1000,
+      useNativeDriver: true,
+    }).start();
+  }, [fadeAnim]);
+
   const toggleModal = () => {
     setIsModalVisible(!isModalVisible);
   };
@@ -105,17 +114,12 @@ export default function HomeScreen() {
       {/* Internet Speed Card */}
       <Surface style={[styles.speedContainer, { backgroundColor: theme.colors.surface }]}>
         <Icon name="speedometer" size={48} color={theme.colors.primary} />
-        <Text style={[styles.speedText, { color: theme.colors.text }]}>{loading ? 'Measuring...' : formatSpeed(speed)}</Text>
+        <Text style={[styles.speedText, { color: theme.colors.text }]}>
+          {loading ? 'Measuring...' : formatSpeed(speed)}
+        </Text>
         <Text style={[styles.label, { color: theme.colors.text }]}>
           Current Internet Speed
         </Text>
-        {loading && (
-          <ActivityIndicator
-            size="large"
-            color={theme.colors.primary}
-            style={{ marginTop: 10 }}
-          />
-        )}
       </Surface>
 
       {/* Button to Open Network Info Modal */}
@@ -136,9 +140,10 @@ export default function HomeScreen() {
       >
         <View style={styles.modalContainer}>
           <Animated.View
-            entering={FadeIn}
-            exiting={FadeOut}
-            style={[styles.modalContent, { backgroundColor: theme.colors.surface }]}
+            style={[
+              styles.modalContent,
+              { backgroundColor: theme.colors.surface, opacity: fadeAnim },
+            ]}
           >
             <Text style={[styles.modalTitle, { color: theme.colors.text }]}>Network Details</Text>
             <Text style={[styles.modalText, { color: theme.colors.text }]}>Network Type: {networkType}</Text>
@@ -221,4 +226,3 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
 });
-
