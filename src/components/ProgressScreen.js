@@ -1,10 +1,10 @@
 import React from 'react';
 import { StyleSheet, View, Animated, Text } from 'react-native';
-import { ProgressBar, Caption, Headline, Surface } from 'react-native-paper';
+import { ProgressBar, Caption, Headline, Surface, useTheme } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export default function ProgressScreen({ progress }) {
-  const progressColor = '#007acc'; // Primary color
+  const theme = useTheme(); // Access the current theme
   const logoAnimation = React.useRef(new Animated.Value(0)).current;
 
   React.useEffect(() => {
@@ -19,22 +19,22 @@ export default function ProgressScreen({ progress }) {
   const progressPercentage = Math.round(progress * 100);
 
   return (
-    <Surface style={styles.container}>
-      <Animated.View style={[styles.logoContainer, { transform: [{ scale: logoAnimation }] }]}>
-        <Icon name="speedometer" size={100} color="#007acc" />
+    <Surface style={[styles.container, { backgroundColor: theme.colors.background }]}>
+      <Animated.View style={[styles.logoContainer, { transform: [{ scale: logoAnimation }], backgroundColor: theme.colors.surface }]}>
+        <Icon name="speedometer" size={100} color={theme.colors.primary} />
       </Animated.View>
-      <Headline style={styles.appName}>SpeedTrack</Headline>
-      <Caption style={styles.subText}>Monitoring your internet speed</Caption>
-      <View style={styles.progressBarContainer}>
+      <Headline style={[styles.appName, { color: theme.colors.primary }]}>SpeedTrack</Headline>
+      <Caption style={[styles.subText, { color: theme.colors.text }]}>Monitoring your internet speed</Caption>
+      <View style={[styles.progressBarContainer, { backgroundColor: theme.colors.onSurface }]}>
         <ProgressBar
           progress={progress}
-          color={progressColor}
+          color={theme.colors.primary}
           style={styles.progressBar}
           accessibilityLabel={`Loading progress: ${progressPercentage}%`}
         />
       </View>
-      <Text style={styles.progressText}>{progressPercentage}%</Text>
-      <Caption style={styles.loadingText}>Please wait...</Caption>
+      <Text style={[styles.progressText, { color: theme.colors.primary }]}>{progressPercentage}%</Text>
+      <Caption style={[styles.loadingText, { color: theme.colors.text }]}>Please wait...</Caption>
     </Surface>
   );
 }
@@ -42,14 +42,12 @@ export default function ProgressScreen({ progress }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f0f4f8',
     alignItems: 'center',
     justifyContent: 'center',
     padding: 20,
   },
   logoContainer: {
     marginBottom: 20,
-    backgroundColor: '#ffffff',
     padding: 20,
     borderRadius: 60,
     elevation: 4,
@@ -58,19 +56,16 @@ const styles = StyleSheet.create({
     fontSize: 32,
     fontWeight: '700',
     marginBottom: 10,
-    color: '#007acc',
     textAlign: 'center',
   },
   subText: {
     fontSize: 18,
-    color: '#555555',
     marginBottom: 20,
     textAlign: 'center',
   },
   progressBarContainer: {
     width: '80%',
     marginBottom: 15,
-    backgroundColor: '#e0e0e0',
     borderRadius: 10,
     padding: 5,
   },
@@ -82,11 +77,10 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '500',
     marginTop: 10,
-    color: '#007acc',
   },
   loadingText: {
     fontSize: 16,
-    color: '#777777',
     marginTop: 15,
   },
 });
+
