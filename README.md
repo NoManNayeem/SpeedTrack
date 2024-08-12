@@ -11,6 +11,25 @@
 - **Animated Splash Screen**: Displays a dynamic loading screen with progress.
 - **Persistent Status Bar Display**: Shows live internet speed in the device's status bar, even when the app is closed.
 
+
+## Screenshots
+
+
+<p align="center">
+  <img src="./screenshots/impage5.jpg" alt="Screenshot 1" style="width:30%; margin: 10px; border: 2px solid #ddd; border-radius: 4px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+  <img src="./screenshots/impage4.jpg" alt="Screenshot 2" style="width:30%; margin: 10px; border: 2px solid #ddd; border-radius: 4px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+</p>
+
+
+<p align="center">
+  <img src="./screenshots/impage3.jpg" alt="Screenshot 3" style="width:30%; margin: 10px; border: 2px solid #ddd; border-radius: 4px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+  <img src="./screenshots/impage2.jpg" alt="Screenshot 4" style="width:30%; margin: 10px; border: 2px solid #ddd; border-radius: 4px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+  <img src="./screenshots/impage1.jpg" alt="Screenshot 5" style="width:30%; margin: 10px; border: 2px solid #ddd; border-radius: 4px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+</p>
+
+
+
+
 ## Project Structure
 
 ```
